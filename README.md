@@ -1,26 +1,52 @@
-# Client template
+# Project Title
 
-This is a template of React project implementation.
-It has all the configuration prepared and is written in TypeScript.
+Disney Characters Browsing App.
+This is a simple app that allows users to browse Disney characters.
 
-## Configuration
+## Features
 
-### Framework
+-   Searching Disney characters
+-   Details about a specific Disney character
 
-1. React
+## Tech Stack
 
-2. TypeScript
+-   React
+-   TypeScript
+-   Vite
+-   Styled-components
+-   TanStack Query
 
-3. Vite
+### Testing tools
 
-### Integrated tools
+-   Vitest
+-   React Testing Library
 
-1. Prettier
+### Additional tools
 
-2. ESLint
+-   ESlint
+-   Prettier
+-   Husky
 
-3. Husky
+## How to use
 
-### Testing
+1. Clone the repo
 
-1. Vitest
+```bash
+git clone https://github.com/PiotrKoszelak/Disney-Characters-Browsing-App.git
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Start the dev server
+
+```bash
+npm run dev
+```
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
