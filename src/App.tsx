@@ -1,43 +1,19 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/home/Home';
+import Details from './pages/details/Details';
+import NoMatch from './pages/noMatch/NoMatch';
 
-import './App.css';
-
-function App() {
-    const [message, setMessage] = useState('');
-    const [botReply, setBotReply] = useState('');
-
-    const handleChat = async () => {
-        try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_SERVER_URL}/chat`,
-                {
-                    message,
-                }
-            );
-
-            setBotReply(response.data.reply);
-        } catch (error) {
-            console.log(error);
-            setBotReply('Oops, failed to fetch!');
-        }
-    };
-
+const App = () => {
     return (
-        <div>
-            <h1>Chat Bot</h1>
-            <div>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    data-testid="input"
-                />
-                <button onClick={handleChat}>Send</button>
-            </div>
-            {botReply && <p role="answer">{botReply}</p>}
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route index element={<Home />} />
+                <Route path="details" element={<Details />} />
+                <Route path="*" element={<NoMatch />} />
+            </Routes>
+        </BrowserRouter>
     );
-}
+};
 
 export default App;
