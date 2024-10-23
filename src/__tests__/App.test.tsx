@@ -18,5 +18,5 @@ afterAll(() => server.close());
 
 test('Displays all elements', () => {
     render(<App />);
-    expect(screen.getByLabelText(/search/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/character name/i)).toBeInTheDocument();
 });

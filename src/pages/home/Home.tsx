@@ -1,55 +1,46 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import styled from 'styled-components';
+import { Container, styled } from '@mui/material';
 
-import { retrieveCharacters } from '../../api/disney';
-import { colors } from '../../theme';
 import { useDebouncedValue } from '../../hooks';
 
 import List from './List';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
-const StyledContainer = styled.div`
+const StyledContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: min(90%, 800px);
-    margin: 0 auto;
-`;
-
-const StyledInput = styled.input`
-    line-height: 30px;
-    vertical-align: middle;
-    padding: 5px 10px;
-    box-sizing: border-box;
-    border: 2px solid ${colors.orangeMain};
-    border-radius: 10px;
 `;
 
 const Home = () => {
     const [searchInput, setSearchInput] = useState('');
 
-    const debouncedSearchInput = useDebouncedValue(searchInput, 2000);
+    const debouncedSearchInput = useDebouncedValue(searchInput, 1000);
 
-    const { data, error, isLoading } = useQuery({
-        queryKey: ['characters', { searchInput: debouncedSearchInput }],
-        queryFn: retrieveCharacters,
-        enabled: !!debouncedSearchInput,
-    });
-
-    const charactersData = data?.data || [];
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    };
 
     return (
         <StyledContainer>
-            <label htmlFor="search">Search Disney characters</label>
-            <StyledInput
-                id="search"
-                type="text"
-                placeholder="Search..."
-                value={searchInput}
-                onChange={(event) => setSearchInput(event.target.value)}
-            />
-
-            <List data={charactersData} isLoading={isLoading} error={error} />
+            <Box component="form" noValidate autoComplete="off">
+                <TextField
+                    id="search"
+                    type="text"
+                    label="Character name"
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    value={searchInput}
+                    onChange={(event) => setSearchInput(event.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+            </Box>
+            <List input={debouncedSearchInput} />
         </StyledContainer>
     );
 };
