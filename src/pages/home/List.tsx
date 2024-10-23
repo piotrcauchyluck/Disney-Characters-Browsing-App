@@ -1,6 +1,12 @@
 import { useCharacterData } from '../../hooks';
 
-import { ListItem, ListItemButton, ListItemText, styled } from '@mui/material';
+import {
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    styled,
+    Typography,
+} from '@mui/material';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import Loader from '../../components/Loader';
@@ -13,6 +19,10 @@ const StyledFixedSizeList = styled(FixedSizeList)`
 interface ListProps {
     input: string;
 }
+
+const Message = (props: { text: string }) => (
+    <Typography variant="subtitle2">{props.text}</Typography>
+);
 
 const List = (props: ListProps) => {
     const { input } = props;
@@ -29,8 +39,8 @@ const List = (props: ListProps) => {
     } = useCharacterData(input);
 
     if (isFetching && !isFetchingNextPage) return <Loader />;
-    if (error) return <div>An error occurred: {error.message}</div>;
-    if (input && !totalPages) return <div>No items found</div>;
+    if (error) return <Message text="An error occurred. Try again" />;
+    if (input && !totalPages) return <Message text="No items found" />;
 
     const isItemLoaded = (index: number) => !hasNextPage || index < data.length;
 
@@ -55,9 +65,7 @@ const List = (props: ListProps) => {
     return (
         <>
             {input && (
-                <div>
-                    Loaded {loadedPages}/{totalPages} pages
-                </div>
+                <Message text={`Loaded ${loadedPages}/${totalPages} pages`} />
             )}
             <InfiniteLoader
                 isItemLoaded={(index) => index < data.length}
