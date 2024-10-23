@@ -7,7 +7,7 @@ import Loader from '../../components/Loader';
 
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 300px);
 `;
 
 interface ListProps {

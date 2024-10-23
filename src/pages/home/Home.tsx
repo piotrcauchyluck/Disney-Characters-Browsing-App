@@ -1,17 +1,26 @@
 import { useState } from 'react';
-import { Container, styled } from '@mui/material';
+import { Container, styled, Typography } from '@mui/material';
 
 import { useDebouncedValue } from '../../hooks';
 
 import List from './List';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import DisneyLogo from '../../assets/disney_logo.png';
 
 const StyledContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: min(90%, 800px);
+`;
+
+const StyledLogo = styled(Box)`
+    background-image: url(${DisneyLogo});
+    width: 200px;
+    height: 85px;
+    background-size: cover;
+    margin: 0 auto;
 `;
 
 const Home = () => {
@@ -27,6 +36,10 @@ const Home = () => {
 
     return (
         <StyledContainer>
+            <StyledLogo />
+            <Typography variant="h6" align="center">
+                Find Your favourite Disney character
+            </Typography>
             <Box component="form" noValidate autoComplete="off">
                 <TextField
                     id="search"
