@@ -3,6 +3,8 @@ import Home from './pages/home/Home';
 import Details from './pages/details/Details';
 import NoMatch from './pages/noMatch/NoMatch';
 
+import './App.css';
+
 const App = () => {
     return (
         <BrowserRouter>
