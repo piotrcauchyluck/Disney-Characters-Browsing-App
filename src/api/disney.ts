@@ -1,16 +1,26 @@
 import axios from 'axios';
 import type { DisneyData, RetrieveCharactersProps } from '../types';
 
-const baseUrl = 'https://api.disneyapi.dev/character';
+export const baseUrl = 'https://api.disneyapi.dev/character';
 
 export const retrieveCharacters = async (
     props: RetrieveCharactersProps
 ): Promise<DisneyData> => {
-    const { queryKey } = props;
-    const [, { searchInput }] = queryKey;
+    const { pageParam } = props;
 
-    const response = await axios.get(
-        `${baseUrl}?name=${encodeURIComponent(searchInput)}`
-    );
-    return response.data;
+    if (pageParam) {
+        const response = await axios.get(pageParam);
+
+        return response.data;
+    }
+
+    return {
+        data: [],
+        info: {
+            count: 0,
+            totalPages: 0,
+            previousPage: null,
+            nextPage: null,
+        },
+    };
 };

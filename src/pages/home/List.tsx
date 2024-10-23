@@ -1,38 +1,87 @@
-import styled from 'styled-components';
+import { useCharacterData } from '../../hooks';
 
-import type { CharactersData } from '../../types';
+import { ListItem, ListItemButton, ListItemText, styled } from '@mui/material';
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import InfiniteLoader from 'react-window-infinite-loader';
+import Loader from '../../components/Loader';
 
-import ListItem from './ListItem';
-
-interface ListProps {
-    data: CharactersData;
-    isLoading: boolean;
-    error: Error | null;
-}
-
-const StyledContainer = styled.ul`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+const StyledFixedSizeList = styled(FixedSizeList)`
+    max-width: 100%;
+    max-height: calc(100vh - 200px);
 `;
 
-const List = (props: ListProps) => {
-    const { data, isLoading, error } = props;
+interface ListProps {
+    input: string;
+}
 
-    if (isLoading) return <div>Fetching characters...</div>;
+const List = (props: ListProps) => {
+    const { input } = props;
+
+    const {
+        error,
+        fetchNextPage,
+        hasNextPage,
+        isFetching,
+        isFetchingNextPage,
+        totalPages,
+        loadedPages,
+        data,
+    } = useCharacterData(input);
+
+    if (isFetching && !isFetchingNextPage) return <Loader />;
     if (error) return <div>An error occurred: {error.message}</div>;
+    if (input && !totalPages) return <div>No items found</div>;
+
+    const isItemLoaded = (index: number) => !hasNextPage || index < data.length;
+
+    function renderRow(props: ListChildComponentProps) {
+        const { index, style } = props;
+
+        return (
+            <ListItem style={style} key={index} component="div" disablePadding>
+                {isItemLoaded(index) ? (
+                    <ListItemButton>
+                        <ListItemText primary={`${data[index]?.name}`} />
+                    </ListItemButton>
+                ) : (
+                    <Loader size="20px" />
+                )}
+            </ListItem>
+        );
+    }
+
+    const itemCount = data.length + (hasNextPage ? 1 : 0);
 
     return (
-        <StyledContainer>
-            {data.map(({ name, _id, films, imageUrl }) => (
-                <li key={_id}>
-                    <ListItem name={name} films={films} imageUrl={imageUrl} />
-                </li>
-            ))}
-        </StyledContainer>
+        <>
+            {input && (
+                <div>
+                    Loaded {loadedPages}/{totalPages} pages
+                </div>
+            )}
+            <InfiniteLoader
+                isItemLoaded={(index) => index < data.length}
+                itemCount={itemCount}
+                loadMoreItems={() => {
+                    if (!isFetchingNextPage) {
+                        fetchNextPage();
+                    }
+                }}
+            >
+                {({ onItemsRendered, ref }) => (
+                    <StyledFixedSizeList
+                        height={2000}
+                        width={800}
+                        itemSize={48}
+                        itemCount={itemCount}
+                        onItemsRendered={onItemsRendered}
+                        ref={ref}
+                    >
+                        {renderRow}
+                    </StyledFixedSizeList>
+                )}
+            </InfiniteLoader>
+        </>
     );
 };
 

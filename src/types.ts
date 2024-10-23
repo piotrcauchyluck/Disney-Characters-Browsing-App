@@ -21,8 +21,8 @@ export type CharactersData = Character[];
 export interface InfoData {
     totalPages: number;
     count: number;
-    previousPage: string;
-    nextPage: string;
+    previousPage: string | null;
+    nextPage: string | null;
 }
 
 export interface DisneyData {
@@ -31,5 +31,5 @@ export interface DisneyData {
 }
 
 export interface RetrieveCharactersProps {
-    queryKey: [key: string, { searchInput: string }];
+    pageParam: string;
 }
