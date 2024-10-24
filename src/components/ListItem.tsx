@@ -9,7 +9,11 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     padding: 5px;
     box-sizing: border-box;
-    margin-left: 5px;
+    margin: 0 5px;
+    width: calc(100%);
+    &:hover {
+        background-color: #f0eeeb;
+    }
 `;
 
 type ListItemProps = ListChildComponentProps & { hasNextPage: boolean };
