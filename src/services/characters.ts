@@ -25,3 +25,11 @@ export const retrieveCharacters = async (
         },
     };
 };
+
+export const retrieveSingleCharacter = async (id: string) => {
+    const response = await axios.get(
+        `https://api.disneyapi.dev/character/${id}`
+    );
+
+    return response.data;
+};

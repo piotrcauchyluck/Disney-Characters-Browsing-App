@@ -1,7 +1,11 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { baseUrl, retrieveCharacters } from '../services/characters';
+import {
+    baseUrl,
+    retrieveCharacters,
+    retrieveSingleCharacter,
+} from '../services/characters';
 
 import type { Character, DisneyData } from '../types/data';
 
@@ -55,7 +59,7 @@ export const useSingleCharacterData = () => {
     const location = useLocation();
     const data: Character = location.state?.data;
 
-    const { id } = useParams();
+    const { id = '' } = useParams();
 
     const {
         isFetching,
@@ -63,10 +67,7 @@ export const useSingleCharacterData = () => {
         data: queryData,
     } = useQuery({
         queryKey: [`singleCharacter-${id}`],
-        queryFn: () =>
-            fetch(`https://api.disneyapi.dev/character/${id}`).then((res) =>
-                res.json()
-            ),
+        queryFn: () => retrieveSingleCharacter(id),
         enabled: !data,
     });
 
