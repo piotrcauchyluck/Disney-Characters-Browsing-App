@@ -1,6 +1,9 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useLocation, useParams } from 'react-router-dom';
+
 import { baseUrl, retrieveCharacters } from '../services/characters';
-import type { DisneyData } from '../types/data';
+
+import type { Character, DisneyData } from '../types/data';
 
 export const useCharacterData = (input: string) => {
     const nameParam = `name=${encodeURIComponent(input)}`;
@@ -39,5 +42,39 @@ export const useCharacterData = (input: string) => {
         totalPages,
         loadedPages: queryData?.pages.length || 0,
         data,
+    };
+};
+
+const handleDataStructure = (queryData: CharacterData | Character) => {
+    if (Array.isArray(queryData)) return null;
+
+    return queryData;
+};
+
+export const useSingleCharacterData = () => {
+    const location = useLocation();
+    const data: Character = location.state?.data;
+
+    const { id } = useParams();
+
+    const {
+        isFetching,
+        error,
+        data: queryData,
+    } = useQuery({
+        queryKey: [`singleCharacter-${id}`],
+        queryFn: () =>
+            fetch(`https://api.disneyapi.dev/character/${id}`).then((res) =>
+                res.json()
+            ),
+        enabled: !data,
+    });
+
+    const passedData = data || handleDataStructure(queryData?.data || []);
+
+    return {
+        data: passedData,
+        isFetching,
+        error,
     };
 };

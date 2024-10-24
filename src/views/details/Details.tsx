@@ -1,37 +1,20 @@
-import { useLocation, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-
-import type { Character } from '../../types/data';
+import Loader from '../../components/Loader';
+import Message from '../../components/Message';
+import { useSingleCharacterData } from '../../hooks/services';
 
 const Details = () => {
-    const location = useLocation();
-    const data: Character = location.state?.data || null;
+    const { data, isFetching, error } = useSingleCharacterData();
 
-    const { id } = useParams();
+    if (isFetching) return <Loader size="30px" />;
 
-    const {
-        isFetching,
-        error,
-        data: queryData,
-    } = useQuery({
-        queryKey: [`singleCharacter-${id}`],
-        queryFn: () =>
-            fetch(`https://api.disneyapi.dev/character/${id}`).then((res) =>
-                res.json()
-            ),
-        enabled: !data,
-    });
+    if (error) return <Message text={`An error has occurred: ${error}`} />;
 
-    if (isFetching) return 'Loading...';
+    if (!data)
+        return (
+            <Message text={`There is no data for the specifiec character`} />
+        );
 
-    if (error) return 'An error has occurred: ' + error.message;
-
-    if (data) {
-        return <div>I'm from data: {data.name}</div>;
-    } else {
-        // handle case with empty data
-        return <div>Not from data: {queryData.data.name}</div>;
-    }
+    return <div>My name is {data.name}</div>;
 };
 
 export default Details;
