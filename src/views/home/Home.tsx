@@ -1,26 +1,26 @@
-import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useDebouncedValue } from '../../hooks/common';
+import { useSearchInput } from '../../hooks/homeView';
+import { size } from '../../utils/constants';
 
 import { Container, styled, Typography } from '@mui/material';
 import List from '../../components/List';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Image from '../../components/Image';
 import DisneyLogo from '../../assets/disney_logo.png';
 
 const StyledContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: min(90%, 800px);
+    width: min(90%, ${size.defaultListWidth}px);
 `;
 
-const StyledLogo = styled(Box)`
-    background-image: url(${DisneyLogo});
+const StyledLogo = styled(Image)`
     width: 200px;
     height: 85px;
-    background-size: cover;
     margin: 0 auto;
     @media (max-width: 768px) {
         width: 100px;
@@ -29,12 +29,9 @@ const StyledLogo = styled(Box)`
 `;
 
 const Home = () => {
-    const [searchInput, setSearchInput] = useState('');
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const searchQuery = searchParams.get('q') || '';
-
+    const [searchInput, setSearchInput] = useSearchInput();
     const debouncedSearchInput = useDebouncedValue(searchInput, 1000);
+    const navigate = useNavigate();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -55,7 +52,7 @@ const Home = () => {
 
     return (
         <StyledContainer>
-            <StyledLogo />
+            <StyledLogo alt="Disney logo" src={DisneyLogo} />
             <Typography variant="h6" align="center">
                 Find Your favourite Disney character
             </Typography>
@@ -67,12 +64,12 @@ const Home = () => {
                     variant="outlined"
                     fullWidth
                     size="small"
-                    value={searchQuery || searchInput}
+                    value={searchInput}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                 />
             </Box>
-            <List input={debouncedSearchInput || searchQuery} />
+            <List input={debouncedSearchInput} />
         </StyledContainer>
     );
 };
