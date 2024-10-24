@@ -2,7 +2,13 @@ import axios from 'axios';
 import type { RetrieveCharactersProps } from '../types/services';
 import type { DisneyData } from '../types/data';
 
-export const baseUrl = 'https://api.disneyapi.dev/character';
+const baseUrl = 'https://api.disneyapi.dev/character';
+
+export const getInitialPageParam = (input: string) =>
+    `${baseUrl}?name=${encodeURIComponent(input)}`;
+
+export const createNextPageParam = (nextPage: string, input: string) =>
+    `${nextPage}&name=${encodeURIComponent(input)}`;
 
 export const retrieveCharacters = async (
     props: RetrieveCharactersProps
@@ -27,9 +33,7 @@ export const retrieveCharacters = async (
 };
 
 export const retrieveSingleCharacter = async (id: string) => {
-    const response = await axios.get(
-        `https://api.disneyapi.dev/character/${id}`
-    );
+    const response = await axios.get(`${baseUrl}/${id}`);
 
     return response.data;
 };

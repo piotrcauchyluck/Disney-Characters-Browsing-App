@@ -2,7 +2,8 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router-dom';
 
 import {
-    baseUrl,
+    createNextPageParam,
+    getInitialPageParam,
     retrieveCharacters,
     retrieveSingleCharacter,
 } from '../services/characters';
@@ -10,8 +11,6 @@ import {
 import type { Character, DisneyData } from '../types/data';
 
 export const useCharacterData = (input: string) => {
-    const nameParam = `name=${encodeURIComponent(input)}`;
-
     const {
         data: queryData,
         error,
@@ -22,11 +21,11 @@ export const useCharacterData = (input: string) => {
     } = useInfiniteQuery({
         queryKey: [input],
         queryFn: retrieveCharacters,
-        initialPageParam: `${baseUrl}?${nameParam}`,
+        initialPageParam: getInitialPageParam(input),
         enabled: !!input,
         getNextPageParam: (lastPage: DisneyData) => {
             const nextPage = lastPage?.info?.nextPage;
-            if (nextPage) return `${nextPage}&${nameParam}`;
+            if (nextPage) return createNextPageParam(nextPage, input);
         },
     });
 
