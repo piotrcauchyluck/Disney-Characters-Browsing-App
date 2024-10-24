@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { mobileThreshold } from '../utils/constants';
 
 export const useDebouncedValue = (value: string, delay: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -34,4 +35,12 @@ export const useWindowDimensions = () => {
     }, []);
 
     return dimensions;
+};
+
+export const useIsMobile = () => {
+    const { width } = useWindowDimensions();
+
+    const isMobile = width <= mobileThreshold;
+
+    return isMobile;
 };

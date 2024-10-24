@@ -3,3 +3,5 @@ export const size = {
     listItemSize: 50,
     listTopDistance: 300,
 };
+
+export const mobileThreshold = 768;

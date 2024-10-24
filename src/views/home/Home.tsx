@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useDebouncedValue } from '../../hooks/common';
 import { useSearchInput } from '../../hooks/homeView';
-import { size } from '../../utils/constants';
+import { mobileThreshold, size } from '../../utils/constants';
 
 import { Container, styled, Typography } from '@mui/material';
 import List from '../../components/List';
@@ -22,7 +22,7 @@ const StyledLogo = styled(Image)`
     width: 200px;
     height: 85px;
     margin: 0 auto;
-    @media (max-width: 768px) {
+    @media (max-width: ${mobileThreshold}px) {
         width: 100px;
         height: 43px;
     }
