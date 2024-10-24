@@ -21,6 +21,10 @@ const StyledLogo = styled(Box)`
     height: 85px;
     background-size: cover;
     margin: 0 auto;
+    @media (max-width: 768px) {
+        width: 100px;
+        height: 43px;
+    }
 `;
 
 const Home = () => {

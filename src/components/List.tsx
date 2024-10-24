@@ -1,4 +1,5 @@
 import { useCharacterData } from '../hooks/services';
+import { useWindowDimensions } from '../hooks/common';
 
 import { FixedSizeList } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
@@ -51,6 +52,8 @@ const List = (props: ListProps) => {
         data,
     } = useCharacterData(input);
 
+    const { height } = useWindowDimensions();
+
     if (isFetching && !isFetchingNextPage) return <Loader />;
     if (error) return <Message text="An error occurred. Try again" />;
     if (input && !totalPages) return <Message text="No items found" />;
@@ -74,7 +77,7 @@ const List = (props: ListProps) => {
             >
                 {({ onItemsRendered, ref }) => (
                     <StyledFixedSizeList
-                        height={2000}
+                        height={height - 300}
                         width={800}
                         itemSize={48}
                         itemCount={itemCount}

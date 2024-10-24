@@ -13,8 +13,6 @@ type ListItemProps = ListChildComponentProps & { hasNextPage: boolean };
 const CustomListItem = (props: ListItemProps) => {
     const { index, style, data: entireData, hasNextPage } = props;
 
-    console.log(props);
-
     const isItemLoaded = !hasNextPage || index < entireData.length;
     const data = entireData[index];
 
