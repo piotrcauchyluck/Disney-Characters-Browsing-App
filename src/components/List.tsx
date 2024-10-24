@@ -10,6 +10,27 @@ import CustomListItem from './ListItem';
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;
     max-height: calc(100vh - 300px);
+
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #3b3b35;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #6e6e62;
+    }
 `;
 
 interface ListProps {
