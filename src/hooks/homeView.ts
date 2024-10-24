@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export const useSearchInput = (): [
@@ -8,6 +8,10 @@ export const useSearchInput = (): [
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('q') || '';
     const [searchInput, setSearchInput] = useState(searchQuery);
+
+    useEffect(() => {
+        setSearchInput(searchQuery);
+    }, [searchQuery]);
 
     return [searchInput, setSearchInput];
 };
