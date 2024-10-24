@@ -1,16 +1,18 @@
 import { useCharacterData } from '../hooks/services';
 import { useWindowDimensions } from '../hooks/common';
 
+import { size } from '../utils/constants';
+
 import { FixedSizeList } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
-import { styled } from '@mui/material';
+import { colors, styled } from '@mui/material';
 import Loader from './Loader';
 import Message from './Message';
 import CustomListItem from './ListItem';
 
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;
-    max-height: calc(100vh - 300px);
+    max-height: calc(100vh - ${size.listTopDistance}px);
 
     ::-webkit-scrollbar {
         width: 12px;
@@ -18,19 +20,19 @@ const StyledFixedSizeList = styled(FixedSizeList)`
 
     /* Track */
     ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey;
+        box-shadow: inset 0 0 5px ${colors.grey[500]};
         border-radius: 10px;
     }
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-        background: #3b3b35;
+        background: ${colors.grey[700]};
         border-radius: 10px;
     }
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: #6e6e62;
+        background: ${colors.grey[500]};
     }
 `;
 
@@ -77,9 +79,9 @@ const List = (props: ListProps) => {
             >
                 {({ onItemsRendered, ref }) => (
                     <StyledFixedSizeList
-                        height={height - 300}
-                        width={800}
-                        itemSize={48}
+                        height={height - size.listTopDistance}
+                        width={size.defaultListWidth}
+                        itemSize={size.listItemSize}
                         itemCount={itemCount}
                         onItemsRendered={onItemsRendered}
                         ref={ref}

@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
-import { ListItem, ListItemText, styled } from '@mui/material';
+import { colors, ListItem, ListItemText, styled } from '@mui/material';
 import Loader from './Loader';
 
 import { ListChildComponentProps } from 'react-window';
 
 const StyledLink = styled(Link)`
-    color: black;
+    color: ${colors.grey[900]};
     text-decoration: none;
     padding: 5px;
     box-sizing: border-box;
     margin: 0 5px;
     width: calc(100%);
     &:hover {
-        background-color: #f0eeeb;
+        background-color: ${colors.grey[200]};
     }
 `;
 
