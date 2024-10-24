@@ -1,3 +1,4 @@
+import Character from '../../components/Character';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { useSingleCharacterData } from '../../hooks/services';
@@ -14,7 +15,7 @@ const Details = () => {
             <Message text={`There is no data for the specifiec character`} />
         );
 
-    return <div>My name is {data.name}</div>;
+    return <Character data={data} />;
 };
 
 export default Details;
