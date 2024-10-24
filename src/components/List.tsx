@@ -1,17 +1,11 @@
-import { Link } from 'react-router-dom';
+import { useCharacterData } from '../hooks/services';
 
-import { useCharacterData } from '../../hooks/services';
-
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import { FixedSizeList } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
-import {
-    ListItem,
-    ListItemButton,
-    ListItemText,
-    styled,
-    Typography,
-} from '@mui/material';
-import Loader from '../../components/Loader';
+import { styled } from '@mui/material';
+import Loader from './Loader';
+import Message from './Message';
+import CustomListItem from './ListItem';
 
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;
@@ -21,10 +15,6 @@ const StyledFixedSizeList = styled(FixedSizeList)`
 interface ListProps {
     input: string;
 }
-
-const Message = (props: { text: string }) => (
-    <Typography variant="subtitle2">{props.text}</Typography>
-);
 
 const List = (props: ListProps) => {
     const { input } = props;
@@ -44,37 +34,8 @@ const List = (props: ListProps) => {
     if (error) return <Message text="An error occurred. Try again" />;
     if (input && !totalPages) return <Message text="No items found" />;
 
-    const isItemLoaded = (index: number) => !hasNextPage || index < data.length;
-
-    function renderRow(props: ListChildComponentProps) {
-        const { index, style } = props;
-
-        const isLoaded = isItemLoaded(index);
-
-        return (
-            <Link
-                to={isLoaded ? `/details/${data[index]._id}` : ''}
-                state={{ data: data[index] }}
-            >
-                <ListItem
-                    style={style}
-                    key={index}
-                    component="div"
-                    disablePadding
-                >
-                    {isLoaded ? (
-                        <ListItemButton>
-                            <ListItemText primary={`${data[index]?.name}`} />
-                        </ListItemButton>
-                    ) : (
-                        <Loader size="20px" />
-                    )}
-                </ListItem>
-            </Link>
-        );
-    }
-
-    const itemCount = data.length + (hasNextPage ? 1 : 0);
+    const dataLength = data.length;
+    const itemCount = dataLength + (hasNextPage ? 1 : 0);
 
     return (
         <>
@@ -82,7 +43,7 @@ const List = (props: ListProps) => {
                 <Message text={`Loaded ${loadedPages}/${totalPages} pages`} />
             )}
             <InfiniteLoader
-                isItemLoaded={(index) => index < data.length}
+                isItemLoaded={(index) => index < dataLength}
                 itemCount={itemCount}
                 loadMoreItems={() => {
                     if (!isFetchingNextPage) {
@@ -98,8 +59,14 @@ const List = (props: ListProps) => {
                         itemCount={itemCount}
                         onItemsRendered={onItemsRendered}
                         ref={ref}
+                        itemData={data}
                     >
-                        {renderRow}
+                        {(props) => (
+                            <CustomListItem
+                                hasNextPage={hasNextPage}
+                                {...props}
+                            />
+                        )}
                     </StyledFixedSizeList>
                 )}
             </InfiniteLoader>

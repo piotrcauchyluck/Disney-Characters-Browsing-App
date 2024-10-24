@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDebouncedValue } from '../../hooks/common';
 
 import { Container, styled, Typography } from '@mui/material';
-import List from './List';
+import List from '../../components/List';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DisneyLogo from '../../assets/disney_logo.png';
