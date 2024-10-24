@@ -10,6 +10,7 @@ import {
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import Loader from '../../components/Loader';
+import { Link } from 'react-router-dom';
 
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;
@@ -47,16 +48,28 @@ const List = (props: ListProps) => {
     function renderRow(props: ListChildComponentProps) {
         const { index, style } = props;
 
+        const isLoaded = isItemLoaded(index);
+
         return (
-            <ListItem style={style} key={index} component="div" disablePadding>
-                {isItemLoaded(index) ? (
-                    <ListItemButton>
-                        <ListItemText primary={`${data[index]?.name}`} />
-                    </ListItemButton>
-                ) : (
-                    <Loader size="20px" />
-                )}
-            </ListItem>
+            <Link
+                to={isLoaded ? `/details/${data[index]._id}` : ''}
+                state={{ data: data[index] }}
+            >
+                <ListItem
+                    style={style}
+                    key={index}
+                    component="div"
+                    disablePadding
+                >
+                    {isLoaded ? (
+                        <ListItemButton>
+                            <ListItemText primary={`${data[index]?.name}`} />
+                        </ListItemButton>
+                    ) : (
+                        <Loader size="20px" />
+                    )}
+                </ListItem>
+            </Link>
         );
     }
 
