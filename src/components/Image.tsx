@@ -1,9 +1,43 @@
-import { Box } from '@mui/material';
+import { useState } from 'react';
+import { Box, styled } from '@mui/material';
+import Loader from './Loader';
 
 type ImageProps = Record<string, unknown>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const StyledImage = styled(({ isLoading, ...props }: ImageProps) => (
+    <Box {...props} />
+))`
+    display: ${(props) => (props.isLoading ? 'none' : 'block')};
+`;
+
+const StyledPlaceholder = styled(Box)`
+    width: 200px;
+    margin: 0 auto;
+`;
+
 const Image = (props: ImageProps) => {
-    return <Box component="img" {...props} />;
+    const [isLoading, setIsLoading] = useState(true);
+
+    const onLoad = () => {
+        setIsLoading(false);
+    };
+
+    return (
+        <>
+            {isLoading && (
+                <StyledPlaceholder>
+                    <Loader size="20px" />
+                </StyledPlaceholder>
+            )}
+            <StyledImage
+                component="img"
+                onLoad={onLoad}
+                isLoading={isLoading}
+                {...props}
+            />
+        </>
+    );
 };
 
 export default Image;
