@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useDebouncedValue } from '../../hooks/common';
 
@@ -29,6 +30,9 @@ const StyledLogo = styled(Box)`
 
 const Home = () => {
     const [searchInput, setSearchInput] = useState('');
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get('q') || '';
 
     const debouncedSearchInput = useDebouncedValue(searchInput, 1000);
 
@@ -36,6 +40,17 @@ const Home = () => {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        navigate({
+            pathname: '/search',
+            search: new URLSearchParams({
+                q: value,
+            }).toString(),
+        });
+        setSearchInput(value);
     };
 
     return (
@@ -52,12 +67,12 @@ const Home = () => {
                     variant="outlined"
                     fullWidth
                     size="small"
-                    value={searchInput}
-                    onChange={(event) => setSearchInput(event.target.value)}
+                    value={searchQuery || searchInput}
+                    onChange={handleChange}
                     onKeyDown={handleKeyDown}
                 />
             </Box>
-            <List input={debouncedSearchInput} />
+            <List input={debouncedSearchInput || searchQuery} />
         </StyledContainer>
     );
 };
