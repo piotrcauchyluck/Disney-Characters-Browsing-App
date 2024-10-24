@@ -1,5 +1,6 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+
 import type { Character } from '../../types/data';
 
 const Details = () => {
@@ -28,6 +29,7 @@ const Details = () => {
     if (data) {
         return <div>I'm from data: {data.name}</div>;
     } else {
+        // handle case with empty data
         return <div>Not from data: {queryData.data.name}</div>;
     }
 };

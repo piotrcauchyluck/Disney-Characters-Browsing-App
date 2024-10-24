@@ -1,3 +1,9 @@
+import { Link } from 'react-router-dom';
+
+import { useCharacterData } from '../../hooks/services';
+
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import InfiniteLoader from 'react-window-infinite-loader';
 import {
     ListItem,
     ListItemButton,
@@ -5,11 +11,7 @@ import {
     styled,
     Typography,
 } from '@mui/material';
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
 import Loader from '../../components/Loader';
-import { Link } from 'react-router-dom';
-import { useCharacterData } from '../../hooks/services';
 
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;

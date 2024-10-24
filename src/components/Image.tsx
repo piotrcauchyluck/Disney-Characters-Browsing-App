@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { Character } from '../types/data';
+import type { Character } from '../types/data';
 
-type ImageProps = Pick<Character, 'imageUrl'>;
+type ImageProps = Pick<Character, 'imageUrl' | 'name'>;
+type StyledImageProps = Pick<ImageProps, 'imageUrl'> & { alt: string };
 
-const StyledImage = styled.image<ImageProps>`
+const StyledImage = styled.image<StyledImageProps>`
     background-image: url(${({ imageUrl }) => imageUrl});
     display: block;
     width: 100%;
@@ -14,9 +15,9 @@ const StyledImage = styled.image<ImageProps>`
 `;
 
 const Image = (props: ImageProps) => {
-    const { imageUrl } = props;
+    const { imageUrl, name } = props;
 
-    return <StyledImage imageUrl={imageUrl} />;
+    return <StyledImage imageUrl={imageUrl} alt={name} />;
 };
 
 export default Image;

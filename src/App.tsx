@@ -15,7 +15,6 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route index element={<Home />} />
                     <Route path="details/:id" element={<Details />} />
                     <Route path="*" element={<NoMatch />} />
                 </Routes>

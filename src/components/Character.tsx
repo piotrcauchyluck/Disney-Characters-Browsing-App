@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Character } from '../types/data';
+import type { Character } from '../types/data';
 
 import Image from './Image';
 
@@ -29,7 +29,7 @@ const CharacterContent = (props: CharacterContentProps) => {
     return (
         <StyledContainer>
             <StyledImageContainer>
-                <Image imageUrl={imageUrl} />
+                <Image imageUrl={imageUrl} name={name} />
             </StyledImageContainer>
             <StyledDescriptionContainer>
                 {name}
