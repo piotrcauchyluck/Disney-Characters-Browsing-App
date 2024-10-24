@@ -13,8 +13,13 @@ This is a simple app that allows users to browse Disney characters.
 -   React
 -   TypeScript
 -   Vite
--   Styled-components
 -   TanStack Query
+
+### Additional libraries
+
+-   Material UI
+-   React Window
+-   React Window Infinite Loader
 
 ### Testing tools
 
@@ -41,7 +46,13 @@ git clone https://github.com/PiotrKoszelak/Disney-Characters-Browsing-App.git
 npm install
 ```
 
-3. Start the dev server
+3. Add .env file inside the root directory
+
+```bash
+VITE_CLIENT_PORT=<YOUR CUSTOM CLIENT PORT>
+```
+
+4. Start the dev server
 
 ```bash
 npm run dev
