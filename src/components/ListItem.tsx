@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
-import { ListItem, ListItemButton, ListItemText, styled } from '@mui/material';
+import { ListItem, ListItemText, styled } from '@mui/material';
 import Loader from './Loader';
 
 import { ListChildComponentProps } from 'react-window';
 
 const StyledLink = styled(Link)`
     color: black;
+    text-decoration: none;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-left: 5px;
 `;
 
 type ListItemProps = ListChildComponentProps & { hasNextPage: boolean };
@@ -17,20 +21,15 @@ const CustomListItem = (props: ListItemProps) => {
     const data = entireData[index];
 
     return (
-        <StyledLink
-            to={isItemLoaded ? `/details/${data._id}` : ''}
-            state={{ data }}
-        >
-            <ListItem style={style} key={index} component="div" disablePadding>
-                {isItemLoaded ? (
-                    <ListItemButton>
-                        <ListItemText primary={`${data.name}`} />
-                    </ListItemButton>
-                ) : (
-                    <Loader size="20px" />
-                )}
-            </ListItem>
-        </StyledLink>
+        <ListItem style={style} key={index} component="div" disablePadding>
+            {isItemLoaded ? (
+                <StyledLink to={`/details/${data._id}`} state={{ data }}>
+                    <ListItemText primary={`${data.name}`} />
+                </StyledLink>
+            ) : (
+                <Loader size="20px" />
+            )}
+        </ListItem>
     );
 };
 
