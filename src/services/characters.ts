@@ -1,5 +1,6 @@
 import axios from 'axios';
-import type { DisneyData, RetrieveCharactersProps } from '../types';
+import type { RetrieveCharactersProps } from '../types/services';
+import { DisneyData } from '../types/data';
 
 export const baseUrl = 'https://api.disneyapi.dev/character';
 

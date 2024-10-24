@@ -1,5 +1,3 @@
-import { useCharacterData } from '../../hooks';
-
 import {
     ListItem,
     ListItemButton,
@@ -11,6 +9,7 @@ import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import Loader from '../../components/Loader';
 import { Link } from 'react-router-dom';
+import { useCharacterData } from '../../hooks/services';
 
 const StyledFixedSizeList = styled(FixedSizeList)`
     max-width: 100%;

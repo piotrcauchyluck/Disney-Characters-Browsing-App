@@ -1,23 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { baseUrl, retrieveCharacters } from './api/disney';
-import type { DisneyData } from './types';
-
-export const useDebouncedValue = (value: string, delay: number) => {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setDebouncedValue(value);
-        }, delay);
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [value, delay]);
-
-    return debouncedValue;
-};
+import { baseUrl, retrieveCharacters } from '../services/characters';
+import type { DisneyData } from '../types/data';
 
 export const useCharacterData = (input: string) => {
     const nameParam = `name=${encodeURIComponent(input)}`;

@@ -1,6 +1,6 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import type { Character } from '../../types';
+import type { Character } from '../../types/data';
 
 const Details = () => {
     const location = useLocation();

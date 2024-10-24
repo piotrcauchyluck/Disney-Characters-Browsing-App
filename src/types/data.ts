@@ -29,7 +29,3 @@ export interface DisneyData {
     info: InfoData;
     data: CharactersData;
 }
-
-export interface RetrieveCharactersProps {
-    pageParam: string;
-}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Character } from '../types';
+import { Character } from '../types/data';
 
 type ImageProps = Pick<Character, 'imageUrl'>;
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Character } from '../types';
+import { Character } from '../types/data';
 
 import Image from './Image';
 
