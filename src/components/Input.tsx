@@ -6,10 +6,9 @@ import { useCustomNavigation, useSearchInput } from '../hooks/homeView';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-interface ChildrenProp {
+interface InputProps extends Record<string, unknown> {
     children(input: string): ReactNode;
 }
-type InputProps = ChildrenProp & Record<string, unknown>;
 
 const Input = (props: InputProps) => {
     const { children, ...restProps } = props;
