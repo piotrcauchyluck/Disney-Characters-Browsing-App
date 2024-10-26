@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const useSearchInput = (): [
     string,
@@ -10,10 +10,27 @@ export const useSearchInput = (): [
     const [searchInput, setSearchInput] = useState(searchQuery);
 
     useEffect(() => {
-        if (searchQuery !== searchInput) {
-            setSearchInput(searchQuery);
-        }
-    }, [searchQuery, searchInput]);
+        setSearchInput(searchQuery);
+    }, [searchQuery]);
 
     return [searchInput, setSearchInput];
+};
+
+export const useCustomNavigation = (input: string) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (input) {
+            navigate({
+                pathname: '/search',
+                search: new URLSearchParams({
+                    q: input,
+                }).toString(),
+            });
+        } else {
+            navigate({
+                pathname: '/',
+            });
+        }
+    }, [input, navigate]);
 };
