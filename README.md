@@ -3,6 +3,12 @@
 Disney Characters Browsing App.
 This is a simple app that allows users to browse Disney characters.
 
+<p align="center">
+  <img alt="Home page" src="./src/assets/home-page.jpg" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Details page" src="./src/assets/details-page.jpg" width="45%">
+</p>
+
 ## Features
 
 -   Searching Disney characters
