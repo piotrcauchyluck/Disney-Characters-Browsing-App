@@ -13,7 +13,9 @@ const StyledImage = styled(({ isLoading, ...props }: ImageProps) => (
 
 const StyledPlaceholder = styled(Box)`
     width: 200px;
-    margin: 0 auto;
+    height: 85px;
+    display: flex;
+    align-items: center;
 `;
 
 const Image = (props: ImageProps) => {
@@ -27,7 +29,7 @@ const Image = (props: ImageProps) => {
         <>
             {isLoading && (
                 <StyledPlaceholder>
-                    <Loader size="20px" />
+                    <Loader size="30px" />
                 </StyledPlaceholder>
             )}
             <StyledImage
