@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 
-import { dataJackSparrow } from '../mockedData';
+import { searchJackSparrow } from '../mockedData';
 import { renderWithRouter } from '../test-utils';
 
 import ListItem from '../../components/ListItem';
@@ -8,9 +8,9 @@ import ListItem from '../../components/ListItem';
 test('Displays the loader for newly fetching data chunk', () => {
     renderWithRouter(
         <ListItem
-            index={dataJackSparrow.data.length}
+            index={searchJackSparrow.data.length}
             style={{}}
-            data={dataJackSparrow.data}
+            data={searchJackSparrow.data}
             hasNextPage
         />
     );
@@ -23,10 +23,12 @@ test('Displays the name', () => {
         <ListItem
             index={1}
             style={{}}
-            data={dataJackSparrow.data}
+            data={searchJackSparrow.data}
             hasNextPage={false}
         />
     );
 
-    expect(screen.getByText(dataJackSparrow.data[1].name)).toBeInTheDocument();
+    expect(
+        screen.getByText(searchJackSparrow.data[1].name)
+    ).toBeInTheDocument();
 });

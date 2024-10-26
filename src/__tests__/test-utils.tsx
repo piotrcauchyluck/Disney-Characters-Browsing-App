@@ -8,13 +8,7 @@ export function renderWithRouter(
     ui: React.ReactElement,
     renderOptions: RenderOptions = {}
 ) {
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                refetchOnWindowFocus: false,
-            },
-        },
-    });
+    const queryClient = new QueryClient();
 
     const Wrapper = ({ children }: PropsWithChildren) => (
         <QueryClientProvider client={queryClient}>

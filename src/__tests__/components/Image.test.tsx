@@ -4,7 +4,7 @@ import { sampleCharacter } from '../mockedData';
 
 import Image from '../../components/Image';
 
-test('Displays the hidden image when loading, after being loaded makes it visible', async () => {
+test('Displays the hidden image and makes it visible when it is loaded', async () => {
     const exampleAltText = 'Test';
     render(<Image alt={exampleAltText} src={sampleCharacter.imageUrl} />);
     const imageElement = screen.getByAltText(exampleAltText);

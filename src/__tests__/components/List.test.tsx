@@ -2,14 +2,14 @@ import { screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { dataJackSparrow, noData } from '../mockedData';
+import { searchJackSparrow, noData } from '../mockedData';
 import { renderWithRouter } from '../test-utils';
 
 import List from '../../components/List';
 
 const server = setupServer(
     http.get(`https://api.disneyapi.dev/character?name=jack%20sparrow`, () => {
-        return HttpResponse.json(dataJackSparrow);
+        return HttpResponse.json(searchJackSparrow);
     })
 );
 
@@ -42,7 +42,7 @@ test('Displays correct number of list items', async () => {
     renderWithRouter(<List input={input} />);
 
     expect(await screen.findAllByRole('listitem')).toHaveLength(
-        dataJackSparrow.data.length
+        searchJackSparrow.data.length
     );
 });
 
