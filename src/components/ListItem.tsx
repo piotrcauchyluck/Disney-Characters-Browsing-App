@@ -26,7 +26,13 @@ const CustomListItem = (props: ListItemProps) => {
     const data = entireData[index];
 
     return (
-        <ListItem style={style} key={index} component="div" disablePadding>
+        <ListItem
+            style={style}
+            key={index}
+            component="div"
+            disablePadding
+            role="listitem"
+        >
             {isItemLoaded ? (
                 <StyledLink to={`/details/${data._id}`} state={{ data }}>
                     <ListItemText primary={`${data.name}`} />

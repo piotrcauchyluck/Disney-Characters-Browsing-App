@@ -27,6 +27,7 @@ export const useCharacterData = (input: string) => {
             const nextPage = lastPage?.info?.nextPage;
             if (nextPage) return createNextPageParam(nextPage, input);
         },
+        retry: 1,
     });
 
     const totalPages = queryData?.pages[0].info.totalPages || 0;
@@ -65,6 +66,7 @@ export const useSingleCharacterData = () => {
         queryKey: [`singleCharacter-${id}`],
         queryFn: () => retrieveSingleCharacter(id),
         enabled: !data,
+        retry: 1,
     });
 
     const passedData = data || handleDataStructure(queryData?.data || []);
