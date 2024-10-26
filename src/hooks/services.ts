@@ -29,12 +29,9 @@ export const useCharacterData = (input: string) => {
         },
     });
 
-    const {
-        info: { totalPages },
-    } = queryData?.pages[0] || {
-        info: { totalPages: 0 },
-    };
+    const totalPages = queryData?.pages[0].info.totalPages || 0;
     const data = queryData?.pages.map(({ data }) => data).flat() || [];
+    const loadedPages = queryData?.pages.length || 0;
 
     return {
         error,
@@ -43,7 +40,7 @@ export const useCharacterData = (input: string) => {
         isFetching,
         isFetchingNextPage,
         totalPages,
-        loadedPages: queryData?.pages.length || 0,
+        loadedPages,
         data,
     };
 };

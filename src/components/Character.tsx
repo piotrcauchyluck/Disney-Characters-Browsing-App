@@ -1,10 +1,11 @@
-import type { Character } from '../types/data';
 import { mappedNames } from '../utils/mappedData';
 import { mobileThreshold, size } from '../utils/constants';
+import { useIsMobile } from '../hooks/common';
+
+import type { Character } from '../types/data';
 
 import { Box, colors, styled, Typography } from '@mui/material';
 import Image from './Image';
-import { useIsMobile } from '../hooks/common';
 
 const StyledContainer = styled(Box)`
     width: min(90%, ${size.defaultListWidth}px);
@@ -41,14 +42,16 @@ const StyledDescription = styled(Box)`
 
 const StyledImage = styled(Image)`
     border-radius: 10px;
+    height: fit-content;
 `;
 
 const StyledMobileImage = styled(StyledImage)`
-    display: block;
     margin: 0 auto;
 `;
 
-type CharacterProps = { data: Character };
+interface CharacterProps {
+    data: Character;
+}
 
 const CharacterDescription = ({ data }: CharacterProps) => (
     <ul className="main-list">
@@ -77,11 +80,7 @@ const Character = (props: CharacterProps) => {
 
     return (
         <StyledContainer>
-            {!isMobile && (
-                <Box>
-                    <StyledImage src={imageUrl} alt={name} />
-                </Box>
-            )}
+            {!isMobile && <StyledImage src={imageUrl} alt={name} />}
             <StyledDescription>
                 <StyledName variant="h5">{name}</StyledName>
                 {isMobile && <StyledMobileImage src={imageUrl} alt={name} />}

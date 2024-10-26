@@ -10,8 +10,10 @@ export const useSearchInput = (): [
     const [searchInput, setSearchInput] = useState(searchQuery);
 
     useEffect(() => {
-        setSearchInput(searchQuery);
-    }, [searchQuery]);
+        if (searchQuery !== searchInput) {
+            setSearchInput(searchQuery);
+        }
+    }, [searchQuery, searchInput]);
 
     return [searchInput, setSearchInput];
 };

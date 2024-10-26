@@ -1,7 +1,8 @@
+import { useSingleCharacterData } from '../../hooks/services';
+
 import Character from '../../components/Character';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
-import { useSingleCharacterData } from '../../hooks/services';
 
 const Details = () => {
     const { data, isFetching, error } = useSingleCharacterData();
